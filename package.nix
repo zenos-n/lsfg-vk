@@ -17,6 +17,8 @@ stdenv.mkDerivation (finalAttrs: {
   ];
   qtWrapperArgs = [ "--prefix" "LD_LIBRARY_PATH" ":" (lib.makeLibraryPath [ vulkan-loader ]) ];
   postFixup = ''
+    substituteInPlace "$out/share/applications/gay.pancake.lsfg-vk-ui.desktop" \
+      --replace-fail "Exec=lsfg-vk-ui" "Exec=$out/bin/lsfg-vk-ui"
     wrapProgram "$out/bin/lsfg-vk-cli" \
       --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ vulkan-loader ]}
   '';
